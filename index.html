@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  
+  <header class="header">
+    <div class="bg"></div>
+    <div class="header__inner container">
+      <div class="header__logo">
+        <img src="img/e2e4_logo.svg" alt="logo">
+      </div>
+      <button id="callback-button" class="header__buttons">Войти</button>
+    </div>
+  </header>
+
+  <div class="modal" id="modal-window">
+    <form action="#">
+      <div class="modal__content">
+      <h2>Заполните данные формы</h2>
+      <p>Пожалуйста заполните форму, чтобы создать учётную запись</p>
+      <button class="modal__close-button"><b>x<b></button>
+      
+      <label for="name">Ваше имя</label>
+      <input type="text" placeholder="Введите имя" name="name" maxlength="255" required>
+
+      <label for="username">Ваша фамилия</label>
+      <input type="text" placeholder="Введите фамилию" name="username" maxlength="255" required>
+
+      <label for="email">Email</label>
+      <input type="text" placeholder="Введите Email" name="email" required>
+
+      <label for="psw">Придумайте пароль</label>
+      <input type="password" placeholder="Введите пароль" name="psw" maxlength="8" required>
+      <span class="psw-error"></span>
+
+      <label for="psw-repeat">Повторите пароль</label>
+      <input type="password" placeholder="Повторите пароль" name="psw-repeat" required>
+      <span class="psw-repeat-error"></span>
+
+      <button type="submit" class="form-btn">Отправить</button>
+
+    </div>
+    </form>
+
+  </div>
+
+  <div class="main"></div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
