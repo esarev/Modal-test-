@@ -83,6 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
       error.style.color = 'red';
       error.innerHTML = 'Пароли не совпадают';
       passwordRepeat.parentElement.insertBefore(error, passwordRepeat);
+    } else {
+      login(user);
     }
 
     // login(user);
