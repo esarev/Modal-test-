@@ -53,7 +53,19 @@ body {
   min-height: 75px;
 }
 
-.header__buttons {
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button-out {
+  display: none;
+  
+}
+
+.header__buttons,
+.button-out {
   width: 150px;
   height: 50px;
   margin: 0px 15px;
@@ -66,11 +78,18 @@ body {
   cursor: pointer;
 }
 
-.header__buttons:hover {
+.header__buttons:hover,
+.button-out:hover {
   border: 1px solid #5802A3;
   transition: .4s;
   background: none;
   color: #5802A3;
+}
+
+.user-name {
+  display: none;
+  font-weight: 700;
+  font-size: 18px;
 }
 
 .modal {
