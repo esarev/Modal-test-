@@ -166,9 +166,11 @@ input[type=date] {
   width: 100%;
   padding: 15px;
   margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
+  display: block;
+  border: 2px solid #f0f0f0;
   background: #f1f1f1;
+  font-size: 14px;
+  font-family: inherit;
 }
 
 input[type=text]:focus,
@@ -206,6 +208,8 @@ input[type=date]:valid+span:after {
   cursor: pointer;
   width: 100%;
   opacity: 0.9;
+  display: block;
+  font-family: inherit;
 }
 
 .form-btn:hover {
@@ -221,4 +225,31 @@ input[type=date]:valid+span:after {
   background-size: cover;
 }
 
+
+.error {
+  max-width: 260px;
+  display: none;
+  font-size: 13px;
+  line-height: 15px;
+  color: #fff;
+  position: absolute;
+  left: 216px;
+  top: calc(100% + 8px);
+  z-index: 100;
+  padding: 6px 10px 7px;
+  border-radius: 6px;
+  background: #d24a4a;
+}
+
+.error:before {
+  width: 0;
+  height: 0;
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: -7px;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+  border-bottom: 8px solid #d24a4a;
+}
 

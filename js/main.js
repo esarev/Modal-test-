@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const callBackBtn = document.getElementById('callback-button'),
         modal = document.getElementById('modal-window'),
+        modalContent = document.querySelector('.modal__content'),
         form = document.getElementById('logInForm'),
         formBtn = form.querySelector('.form-btn'),
         buttonOut = document.querySelector('.button-out'),
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         password = document.getElementById('password'),
         passwordRepeat = document.getElementById('password-repeat'),
         date = document.getElementById('date'),
-        fields = form.querySelectorAll('.fields');
+        fields = form.querySelectorAll('.field');
 
   const login = (user) => {
     callBackBtn.style.display = 'none';
@@ -45,49 +46,63 @@ document.addEventListener('DOMContentLoaded', () => {
     logout();
   });
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+  const generateError = function (text) {
+    const error = document.createElement('div');
+    error.className = 'error';
+    error.style.color = 'red';
+    error.innerHTML = text;
+    return error;
+  };
 
-    //Validation:
-
-    for (let i = 0; i < fields.length; i++) {
-      if (!fields[i].value) {
-        console.log('пусто', fields[i]);
-
-        const error = document.createElement('div');
-        error.className = 'error';
-        error.style.color = 'red';
-        error.innerHTML = 'Заполните поле';
-        form[i].parentElement.insertBefore(error, fields[i]);
-      }
-    }
-
-    const user = {
-      name: name.value,
-      surname: surname.value,
-      email: email.value,
-      password: password.value,
-      passwordRepeat: passwordRepeat.value,
-      date: date.value
-    };
-
+  const removeValidation = function () {
     const errors = form.querySelectorAll('.error');
 
     for (let i = 0; i < errors.length; i++) {
       errors[i].remove();
     }
+  };
 
-    if (password.value !== passwordRepeat.value) {
-      const error = document.createElement('div');
-      error.className = 'error';
-      error.style.color = 'red';
-      error.innerHTML = 'Пароли не совпадают';
-      passwordRepeat.parentElement.insertBefore(error, passwordRepeat);
-    } else {
-      login(user);
+  const checkFields = function () {
+    for (let i = 0; i < fields.length; i++) {
+      if (!fields[i].value) {
+        console.log('пусто', fields[i]);
+
+        const error = generateError('Заполните поле');
+        form[i].parentElement.insertBefore(error, fields[i]);
+      } 
     }
+    
+  };
 
-    // login(user);
+  const checkPassword = function () {
+    if (password.value !== passwordRepeat.value) {
+      const error = generateError('Пароли не совпадают');
+      passwordRepeat.parentElement.insertBefore(error, passwordRepeat);
+    }
+  };
+
+  form.addEventListener('submit', (e) => {
+    if (e.target) {
+      e.preventDefault();
+    }
+    
+    removeValidation();
+
+    checkFields();
+
+    checkPassword();
+    
+    const user = {
+    name: name.value,
+    surname: surname.value,
+    email: email.value,
+    password: password.value,
+    passwordRepeat: passwordRepeat.value,
+    date: date.value
+    };
+    
+    login(user);
+
   });
 
 
