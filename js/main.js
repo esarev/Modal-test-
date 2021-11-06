@@ -1,23 +1,35 @@
-document.addEventListener('DOMContentLoaded', () => {
 
-  const callBackBtn = document.getElementById('callback-button'),
+document.addEventListener('DOMContentLoaded', () => {
+  'use strict';
+
+  const loginBtn = document.getElementById('callback-button'),
         modal = document.getElementById('modal-window'),
         modalContent = document.querySelector('.modal__content'),
-        form = document.getElementById('logInForm'),
+        form = document.getElementById('form'),
         formBtn = form.querySelector('.form-btn'),
-        buttonOut = document.querySelector('.button-out'),
         userName = document.querySelector('.user-name'),
         closeBtn = form.querySelector('.modal__close-button'),
-        name = document.getElementById('name'),
-        surname = document.getElementById('surname'),
-        email = document.getElementById('email'),
-        password = document.getElementById('password'),
-        passwordRepeat = document.getElementById('password-repeat'),
-        date = document.getElementById('date'),
-        fields = form.querySelectorAll('.field');
+        buttonOut = document.querySelector('.button-out'),
+        inputName = document.getElementById('name'),
+        inputSurname = document.getElementById('surname'),
+        inputEmail = document.getElementById('email'),
+        inputPassword = document.getElementById('password'),
+        inputPasswordRepeat = document.getElementById('password-repeat'),
+        inputDate = document.getElementById('date'),
+        fields = document.querySelectorAll('.field');
 
+  // Open Modal
+  loginBtn.onclick = function () {
+    modal.classList.add('modal_active');
+  };
+
+  closeBtn.onclick = function () {
+    modal.classList.remove('modal_active');
+  };
+
+  // User login
   const login = (user) => {
-    callBackBtn.style.display = 'none';
+    loginBtn.style.display = 'none';
 
     buttonOut.style.display = 'block';
     userName.style.display = 'block';
@@ -26,36 +38,31 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.classList.remove('modal_active');
   };
 
+  // User logout
   const logout = () => {
-    callBackBtn.style.display = 'block';
+    loginBtn.style.display = 'block';
 
     buttonOut.style.display = 'none';
     userName.style.display = 'none';
     userName.textContent = '';
-  };
-  
-  callBackBtn.onclick = function () {
-    modal.classList.add('modal_active');
-  };
-
-  closeBtn.onclick = function () {
-    modal.classList.remove('modal_active');
   };
 
   buttonOut.addEventListener('click', () => {
     logout();
   });
 
+  // Validate
   const generateError = function (text) {
-    const error = document.createElement('div');
+    const error = document.createElement('span');
     error.className = 'error';
-    error.style.color = 'red';
+    error.style.display = 'block';
     error.innerHTML = text;
     return error;
   };
 
   const removeValidation = function () {
     const errors = form.querySelectorAll('.error');
+    
 
     for (let i = 0; i < errors.length; i++) {
       errors[i].remove();
@@ -67,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!fields[i].value) {
         console.log('пусто', fields[i]);
 
-        const error = generateError('Заполните поле');
+        let error = generateError('Заполните поле');
         form[i].parentElement.insertBefore(error, fields[i]);
       } 
     }
@@ -75,35 +82,34 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const checkPassword = function () {
-    if (password.value !== passwordRepeat.value) {
+    if (inputPassword.value !== inputPasswordRepeat.value) {
       const error = generateError('Пароли не совпадают');
-      passwordRepeat.parentElement.insertBefore(error, passwordRepeat);
+      inputPasswordRepeat.parentElement.insertBefore(error, inputPasswordRepeat);
     }
   };
-
-  form.addEventListener('submit', (e) => {
-    if (e.target) {
-      e.preventDefault();
-    }
+  
+  form.onsubmit = function (e) {
+    e.preventDefault();
+    console.log('clicked on submit');
     
-    removeValidation();
-
     checkFields();
-
+    removeValidation();
     checkPassword();
     
     const user = {
-    name: name.value,
-    surname: surname.value,
-    email: email.value,
-    password: password.value,
-    passwordRepeat: passwordRepeat.value,
-    date: date.value
+    name: inputName.value,
+    surname: inputSurname.value,
+    email: inputEmail.value,
+    password: inputPassword.value,
+    passwordRepeat: inputPasswordRepeat.value,
+    date: inputDate.value
     };
-    
+
     login(user);
 
-  });
+  };
 
 
 });
+
+

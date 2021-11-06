@@ -25,57 +25,45 @@
   </header>
 
   <div class="modal" id="modal-window">
-    <form id="logInForm" action="#">
+    <form id="form" action="#">
       <div class="modal__content">
         <h2>Заполните данные формы</h2>
         <p>Пожалуйста заполните форму, чтобы создать учётную запись</p>
         <button class="modal__close-button"><b>x<b></button>
-        <div class="form-control succes">
+        <div class="form-control">
           <label for="name">Ваше имя:</label>
-          <input id="name" class="field" type="text" placeholder="Введите имя" name="name" maxlength="25" required/>
-          <!-- <i class="fas fa-check-circle">&#10004;</i>
-          <i class="fas fa-exclamation-circle">&#10006;</i> -->
-          <span class="error">Error message</span>
+          <input id="name" class="field" type="text" placeholder="Введите имя" name="name" maxlength="25" required />
+          <span class="error">Ошибка</span>
         </div>
 
-        <div class="form-control error">
+        <div class="form-control">
           <label for="surname">Ваша фамилия:</label>
-          <input id="surname" class="field" type="text" placeholder="Введите фамилию" name="surname" maxlength="30" required/>
-          <i class="fas fa-check-circle"></i>
-          <i class="fas fa-exclamation-circle"></i>
-          <span class="error">Error message</span>
+          <input id="surname" class="field" type="text" placeholder="Введите фамилию" name="surname" maxlength="30" required />
+          <span class="error"></span>
         </div>
         
         <div class="form-control">
           <label for="email">Email:</label>
-          <input id="email" class="field" type="text" placeholder="Введите Email" name="email" required/>
-          <i class="fas fa-check-circle"></i>
-          <i class="fas fa-exclamation-circle"></i>
-          <span class="error">Error message</span>
+          <input id="email" class="field" type="text" placeholder="Введите Email" name="email" required />
+          <span class="error"></span>
         </div>
         
         <div class="form-control">
           <label for="psw">Придумайте пароль:</label>
-          <input id="password" class="field" type="password" placeholder="Введите пароль" name="psw" minlength="8" required/>
-          <i class="fas fa-check-circle"></i>
-          <i class="fas fa-exclamation-circle"></i>
-          <span class="error">Error message</span>
+          <input id="password" class="field" type="password" placeholder="Введите пароль" name="psw" minlength="8" required />
+          <span class="error"></span>
         </div>
 
         <div class="form-control">
           <label for="psw-repeat">Повторите пароль:</label>
-          <input id="password-repeat" class="field" type="password" placeholder="Повторите пароль" name="psw-repeat" minlength="8" required/>
-          <i class="fas fa-check-circle"></i>
-          <i class="fas fa-exclamation-circle"></i>
-          <span class="error">Error message</span>
+          <input id="password-repeat" class="field js-field-password" type="password" placeholder="Повторите пароль" name="psw-repeat" minlength="8" required />
+          <span class="error"></span>
         </div>
 
         <div class="form-control">
           <label for="bday">Дата рождения: <br></label>
           <input id="date" class="field" type="date" id="bday" placeholder="" required name="bday" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
-          <i class="fas fa-check-circle"></i>
-          <i class="fas fa-exclamation-circle"></i>
-          <span class="error">Error message</span>
+          <span class="error"></span>
         </div>
 
         <button type="submit" class="form-btn">Отправить</button>
