@@ -4,9 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const loginBtn = document.getElementById('callback-button'),
         modal = document.getElementById('modal-window'),
-        modalContent = document.querySelector('.modal__content'),
         form = document.getElementById('form'),
-        formBtn = form.querySelector('.form-btn'),
         userName = document.querySelector('.user-name'),
         closeBtn = form.querySelector('.modal__close-button'),
         buttonOut = document.querySelector('.button-out'),
