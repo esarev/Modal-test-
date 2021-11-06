@@ -68,10 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const checkFields = function () {
+    let newError = false;
     for (let i = 0; i < fields.length; i++) {
       if (!fields[i].value) {
         console.log('пусто', fields[i]);
-
+        newError = true;
         let error = generateError('Заполните поле');
         form[i].parentElement.insertBefore(error, fields[i]);
       } 
@@ -80,19 +81,38 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const checkPassword = function () {
+    let newError = false;
     if (inputPassword.value !== inputPasswordRepeat.value) {
       const error = generateError('Пароли не совпадают');
+      newError = true;
       inputPasswordRepeat.parentElement.insertBefore(error, inputPasswordRepeat);
     }
+    
   };
-  
-  form.onsubmit = function (e) {
+
+  console.log(form);
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
     console.log('clicked on submit');
+    try {
+      checkFields();
+    } catch {
+      return;
+    }
     
-    checkFields();
+    
+    
+    
+
     removeValidation();
-    checkPassword();
+
+
+    try {
+      checkPassword();
+    } catch {
+      return;
+    }
+    
     
     const user = {
     name: inputName.value,
@@ -105,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     login(user);
 
-  };
+  });
 
 
 });
