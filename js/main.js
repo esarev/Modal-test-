@@ -51,68 +51,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Validate
   const generateError = function (text) {
-    const error = document.createElement('span');
+    let error = document.createElement('span');
     error.className = 'error';
     error.style.display = 'block';
     error.innerHTML = text;
+    console.log(error);
     return error;
+    
   };
 
   const removeValidation = function () {
-    const errors = form.querySelectorAll('.error');
+    let errors = form.querySelectorAll('.error');
     
-
     for (let i = 0; i < errors.length; i++) {
       errors[i].remove();
     }
   };
 
   const checkFields = function () {
-    let newError = false;
+
     for (let i = 0; i < fields.length; i++) {
       if (!fields[i].value) {
         console.log('пусто', fields[i]);
-        newError = true;
+        
         let error = generateError('Заполните поле');
+        
+        console.log(error);
         form[i].parentElement.insertBefore(error, fields[i]);
-      } 
+        
+        
+      }
+      
     }
     
   };
 
   const checkPassword = function () {
-    let newError = false;
+    
     if (inputPassword.value !== inputPasswordRepeat.value) {
       const error = generateError('Пароли не совпадают');
-      newError = true;
+      
       inputPasswordRepeat.parentElement.insertBefore(error, inputPasswordRepeat);
+      
     }
-    
+    // return error; - arbeiten.?
   };
 
   console.log(form);
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     console.log('clicked on submit');
-    try {
-      checkFields();
-    } catch {
-      return;
-    }
     
-    
-    
-    
-
+    checkFields();
     removeValidation();
-
-
-    try {
-      checkPassword();
-    } catch {
-      return;
-    }
-    
+    checkPassword();
     
     const user = {
     name: inputName.value,
@@ -126,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
     login(user);
 
   });
-
 
 });
 
