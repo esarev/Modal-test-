@@ -1,12 +1,13 @@
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
   'use strict';
+  let isValidateError = false;
 
-  const loginBtn = document.getElementById('callback-button'),
+  const loginButton = document.getElementById('callback-button'),
         modal = document.getElementById('modal-window'),
         form = document.getElementById('form'),
         userName = document.querySelector('.user-name'),
-        closeBtn = form.querySelector('.modal__close-button'),
+        closeButton = form.querySelector('.modal__close-button'),
         buttonOut = document.querySelector('.button-out'),
         inputName = document.getElementById('name'),
         inputSurname = document.getElementById('surname'),
@@ -15,9 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
         inputPasswordRepeat = document.getElementById('password-repeat'),
         inputDate = document.getElementById('date'),
         fields = document.querySelectorAll('.field');
-
+      
   // Open Modal
-  loginBtn.onclick = function () {
+  loginButton.onclick = function () {
     modal.classList.add('modal_active');
   };
 
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.classList.remove('modal_active');
   }
 
-  closeBtn.addEventListener('click', closeModal);
+  closeButton.addEventListener('click', closeModal);
     
   modal.addEventListener('click', function(e) {
     if (e.target === modal) {
@@ -35,8 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // User login
-  const login = (user) => {
-    loginBtn.style.display = 'none';
+  const login = function(user) {
+    loginButton.style.display = 'none';
 
     buttonOut.style.display = 'block';
     userName.style.display = 'block';
@@ -46,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // User logout
-  const logout = () => {
-    loginBtn.style.display = 'block';
+  const logout = function() {
+    loginButton.style.display = 'block';
 
     buttonOut.style.display = 'none';
     userName.style.display = 'none';
@@ -59,65 +60,79 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Validate
-  const generateError = function (text) {
-    let error = document.createElement('span');
+
+  function generateError(text) {
+    const error = document.createElement('span');
     error.className = 'error';
     error.style.display = 'block';
-    error.innerHTML = text;
+    error.innerText = text;
     console.log(error);
     return error;
     
-  };
+  }
 
-  const removeValidation = function () {
-    let errors = form.querySelectorAll('.error');
+  // const clearError =  document.getElementsByTagName('span');
     
+  // clearError.addEventListener('focus', (e) => {
+  //   e.target.style.display = 'block';
+  // });
+    
+  
+
+  function removeValidation() {
+    let errors = form.querySelectorAll('.error');
+    isValidateError = true;
     for (let i = 0; i < errors.length; i++) {
       errors[i].remove();
+      // clearError();
     }
-  };
+  }
 
-  const checkFields = function () {
-
+  function checkFields() {
     for (let i = 0; i < fields.length; i++) {
-      if (!fields[i].value) {
+      if (fields[i].value) {return;}
         console.log('пусто', fields[i]);
-        
+        isValidateError = true;
         let error = generateError('Заполните поле');
-        
         console.log(error);
-        form[i].parentElement.insertBefore(error, fields[i]);
-        
-      }
+        fields[i].parentNode.insertBefore(error, fields[i]);
       
     }
-    
-  };
+  }
 
-  const checkPassword = function () {
-    
-
+  function checkPassword() {
     if (inputPassword.value !== inputPasswordRepeat.value) {
       const error = generateError('Пароли не совпадают');
-      
-      inputPasswordRepeat.parentElement.insertBefore(error, inputPasswordRepeat);
-
+      isValidateError = true;
+      inputPasswordRepeat.parentNode.insertBefore(error, inputPasswordRepeat);
     }
-    
-  };
+  }
+
+  function validate() {
+    removeValidation();
+    checkFields();
+    checkPassword();
+  }
 
   // let validEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   // return validEmail.test(String(email).toLowerCase());
+
+  // fields.forEach(item => {
+  //   item.addEventListener('input', () => {
+  //     item.value = item.value.replace(/\D/, '') - only numbers;
+  //   });
+  // });
 
 
   console.log(form);
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+
+    isValidateError = false;
+
     console.log('clicked on submit');
     
-    checkFields();
-    removeValidation();
-    checkPassword();
+    validate();
     
     const user = {
     name: inputName.value,
@@ -128,10 +143,11 @@ document.addEventListener('DOMContentLoaded', () => {
     date: inputDate.value
     };
 
-    login(user);
+    if (!isValidateError) {
+      login(user);
+    }
 
   });
-
 });
 
 
