@@ -136,7 +136,7 @@ body {
 }
 
 .modal__close-button {
-  font-size: 20px;
+  font-size: 30px;
   height: 30px;
   width: 30px;
   display: flex;
@@ -162,6 +162,7 @@ body {
 }
 
 input[type=text],
+input[type=email],
 input[type=password],
 input[type=date] {
   width: 100%;
@@ -175,6 +176,7 @@ input[type=date] {
 }
 
 input[type=text]:focus,
+input[type=email]:focus,
 input[type=password]:focus {
   background-color: #ddd;
   outline: none;
@@ -183,6 +185,8 @@ input[type=password]:focus {
 input[type=date] {
   display: block;
   width: 300px;
+  outline: none;
+  cursor: text;
 }
 
 /* input[type=text],

@@ -21,9 +21,18 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.classList.add('modal_active');
   };
 
-  closeBtn.onclick = function () {
+  // Close Modal
+  function closeModal() {
     modal.classList.remove('modal_active');
-  };
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+    
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
 
   // User login
   const login = (user) => {
@@ -79,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(error);
         form[i].parentElement.insertBefore(error, fields[i]);
         
-        
       }
       
     }
@@ -88,14 +96,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const checkPassword = function () {
     
+
     if (inputPassword.value !== inputPasswordRepeat.value) {
       const error = generateError('Пароли не совпадают');
       
       inputPasswordRepeat.parentElement.insertBefore(error, inputPasswordRepeat);
-      
+
     }
-    // return error; - arbeiten.?
+    
   };
+
+  // let validEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  // return validEmail.test(String(email).toLowerCase());
+
 
   console.log(form);
   form.addEventListener('submit', function (e) {
