@@ -66,38 +66,37 @@ document.addEventListener('DOMContentLoaded', function() {
     error.className = 'error';
     error.style.display = 'block';
     error.innerText = text;
-    console.log(error);
     return error;
-    
   }
-
-  // const clearError =  document.getElementsByTagName('span');
-    
-  // clearError.addEventListener('focus', (e) => {
-  //   e.target.style.display = 'block';
-  // });
-    
-  
 
   function removeValidation() {
     let errors = form.querySelectorAll('.error');
-    isValidateError = true;
+    
     for (let i = 0; i < errors.length; i++) {
       errors[i].remove();
-      // clearError();
     }
   }
+  
+  // fields.forEach((item) => {
+  //   item.addEventListener('focus', function() {
+  //     fields.parentNode.removeChild(fields);
+  //   });
+  // });
 
   function checkFields() {
     for (let i = 0; i < fields.length; i++) {
       if (fields[i].value) {return;}
-        console.log('пусто', fields[i]);
+        
         isValidateError = true;
         let error = generateError('Заполните поле');
-        console.log(error);
-        fields[i].parentNode.insertBefore(error, fields[i]);
       
-    }
+        fields[i].parentNode.insertBefore(error, fields[i]);
+    } 
+  }
+
+  function checkEmail(email) {
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   }
 
   function checkPassword() {
@@ -111,7 +110,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function validate() {
     removeValidation();
     checkFields();
+    checkEmail();
     checkPassword();
+
   }
 
   // let validEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -128,11 +129,21 @@ document.addEventListener('DOMContentLoaded', function() {
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
+    let emailVal = inputEmail.value;
     isValidateError = false;
 
     console.log('clicked on submit');
     
     validate();
+
+    const span = document.querySelector('.error');
+    if(!checkEmail(emailVal)) {
+      console.log('email.not valid');
+      span.classList.add('error');
+      return false;
+    } else {
+      span.classList.remove('error');
+    }
     
     const user = {
     name: inputName.value,
