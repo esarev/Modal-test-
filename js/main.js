@@ -133,27 +133,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   // Date
-  let now = new Date();
-  console.log(now);
-  let userDate = new Date(now);
-  console.log(userDate);
-  let adult = now - userDate;
-  console.log(adult);
+//   let now = new Date();
+//   console.log(now);
+//   let userDate = new Date(now);
+//   console.log(userDate);
+//   let adult = now - userDate;
+//   console.log(adult);
 
-  function isOverEighteen(birthday) {
-      var ageDifMs = Date.now() - birthday.getTime();
-      var ageDate = new Date(ageDifMs);
-      var age = Math.abs(ageDate.getUTCFullYear() - 1970);
-      if(age > 18){
-        return true;
-      }else{
-        return false;
-      }
-  }
+//   function isOverEighteen(birthday) {
+//       var ageDifMs = Date.now() - birthday.getTime();
+//       var ageDate = new Date(ageDifMs);
+//       var age = Math.abs(ageDate.getUTCFullYear() - 1970);
+//       if(age > 18){
+//         return true;
+//       }else{
+//         return false;
+//       }
+//   }
 
-console.log(isOverEighteen(now));
-console.log(isOverEighteen(userDate));
+// console.log(isOverEighteen(now));
+// console.log(isOverEighteen(userDate));
 
+
+  inputDate.addEventListener('change', function() {
+    let input = this.value;
+    let dateEntered = new Date(input);
+    console.log(input);
+    console.log(dateEntered);
+    // let sum = new Date() - dateEntered;
+    // console.log(sum);
+    
+    let sumFormatted = Math.abs(dateEntered.getUTCFullYear() - 1970);
+    console.log(sumFormatted);
+  });
 
   console.log(form);
   form.addEventListener('submit', function (e) {
