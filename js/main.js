@@ -124,13 +124,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   }
 
-  // fields.forEach(item => {
-  //   item.addEventListener('input', () => {
-  //     item.value = item.value.replace(/\D/, '') - only numbers;
-  //   });
-  // });
-
-
   
   // Date
 //   let now = new Date();
@@ -165,6 +158,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let sumFormatted = Math.abs(dateEntered.getUTCFullYear() - 1970);
     console.log(sumFormatted);
+
+    if(sumFormatted > 18) {
+      return true;
+      } else {
+      return false;
+    }
+    
   });
 
   console.log(form);
