@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (fields[i].value) {return;}
         
         isValidateError = true;
-        let error = generateError('Заполните поле');
+        const error = generateError('Заполните поле');
       
         fields[i].parentNode.insertBefore(error, fields[i]);
     } 
@@ -101,12 +101,24 @@ document.addEventListener('DOMContentLoaded', function() {
     return /^[А-ЯЁ][а-яё]+$/.test(nameVal);
   }
 
-  function checkEmail(email) {
-    let emailVal = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    console.log(emailVal);
-    return emailVal.test(String(email).toLowerCase());
+  // ValidEmail
+  const emailRegExp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+
+  function validateEmail(value) {
+    return emailRegExp.test(value);
   }
 
+  function updateInput() {
+    if(validateEmail(inputEmail.value)) {
+      return true;
+    } else {
+      const error = generateError('Введите корректный email');
+      inputEmail.parentNode.insertBefore(error, inputEmail);
+    }
+  }
+  inputEmail.addEventListener('input', updateInput);
+
+  // ValidPassword
   function checkPassword() {
     if (inputPassword.value !== inputPasswordRepeat.value) {
       const error = generateError('Пароли не совпадают');
@@ -115,33 +127,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // DateValid
+  inputDate.addEventListener('change', function() {
+  let input = this.value;
+  let dateNow = new Date();
+  let dateEntered = new Date(input);
+  console.log(input);
+  console.log(dateEntered);
+  let date = dateNow.getFullYear() - dateEntered.getFullYear();
+  console.log(date);
+    if(date > 18) {
+      return true;
+    } else {
+      const error = generateError('Упс! Вам ещё не исполнилось 18 лет!');
+      console.log(generateError);
+      inputDate.parentNode.insertBefore(error, inputDate);
+    }
+  });
+  
+
   function validate() {
     removeValidation();
     checkFields();
     checkName();
-    checkEmail();
     checkPassword();
-
   }
-
-  
-  // Date
-
-  inputDate.addEventListener('change', function() {
-    let input = this.value;
-    let dateNow = new Date();
-    let dateEntered = new Date(input);
-    console.log(input);
-    console.log(dateEntered);
-    let date = dateNow.getFullYear() - dateEntered.getFullYear();
-    console.log(date);
-    if(date > 18) {
-      return true;
-      } else {
-      return false;
-    }
-    
-  });
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -153,24 +163,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     validate();
 
-    const span = document.createElement('span');
-
-    if(!checkEmail(checkName())) {
-      console.log('not valid');
-      span.classList.add('error');
-      return false;
-    } else {
-      span.classList.remove('error');
-    }
-
-    if(!checkEmail(emailVal)) {
-      console.log('email.not valid');
-      span.classList.add('error');
-      return false;
-    } else {
-      span.classList.remove('error');
-    }
-    
     const user = {
     name: inputName.value,
     surname: inputSurname.value,
