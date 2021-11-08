@@ -94,9 +94,14 @@ document.addEventListener('DOMContentLoaded', function() {
     } 
   }
 
+  function checkName(input) {
+    let nameVal = input.value;
+    return /^[А-ЯЁ][а-яё]+$/.test(nameVal);
+  }
+
   function checkEmail(email) {
-    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+    let emailVal = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return emailVal.test(String(email).toLowerCase());
   }
 
   function checkPassword() {
@@ -114,9 +119,6 @@ document.addEventListener('DOMContentLoaded', function() {
     checkPassword();
 
   }
-
-  // let validEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  // return validEmail.test(String(email).toLowerCase());
 
   // fields.forEach(item => {
   //   item.addEventListener('input', () => {
@@ -136,6 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     validate();
 
+    
     const span = document.querySelector('.error');
     if(!checkEmail(emailVal)) {
       console.log('email.not valid');
