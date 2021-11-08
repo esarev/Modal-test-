@@ -96,11 +96,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function checkName() {
     let nameVal = fields.value;
+    console.log(nameVal);
+
     return /^[А-ЯЁ][а-яё]+$/.test(nameVal);
   }
 
   function checkEmail(email) {
     let emailVal = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    console.log(emailVal);
     return emailVal.test(String(email).toLowerCase());
   }
 
@@ -130,22 +133,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   // Date
-//   let now = new Date();
-//   let userAge = new Date();
+  let now = new Date();
+  console.log(now);
+  let userDate = new Date(now);
+  console.log(userDate);
+  let adult = now - userDate;
+  console.log(adult);
 
-//   function isOverEighteen(birthday) {
-//       var ageDifMs = Date.now() - birthday.getTime();
-//       var ageDate = new Date(ageDifMs);
-//       var age = Math.abs(ageDate.getUTCFullYear() - 1970);
-//       if(age > 18){
-//         return true;
-//       }else{
-//         return false;
-//       }
-//   }
+  function isOverEighteen(birthday) {
+      var ageDifMs = Date.now() - birthday.getTime();
+      var ageDate = new Date(ageDifMs);
+      var age = Math.abs(ageDate.getUTCFullYear() - 1970);
+      if(age > 18){
+        return true;
+      }else{
+        return false;
+      }
+  }
 
-// console.log(isOverEighteen(now));
-// console.log(isOverEighteen(userAge));
+console.log(isOverEighteen(now));
+console.log(isOverEighteen(userDate));
 
 
   console.log(form);
@@ -162,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const span = document.createElement('span');
 
     if(!checkEmail(checkName())) {
-      console.log('name not valid');
+      console.log('not valid');
       span.classList.add('error');
       return false;
     } else {
