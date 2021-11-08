@@ -94,8 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
     } 
   }
 
-  function checkName(input) {
-    let nameVal = input.value;
+  function checkName() {
+    let nameVal = fields.value;
     return /^[А-ЯЁ][а-яё]+$/.test(nameVal);
   }
 
@@ -115,6 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function validate() {
     removeValidation();
     checkFields();
+    checkName();
     checkEmail();
     checkPassword();
 
@@ -125,6 +126,26 @@ document.addEventListener('DOMContentLoaded', function() {
   //     item.value = item.value.replace(/\D/, '') - only numbers;
   //   });
   // });
+
+
+  
+  // Date
+//   let now = new Date();
+//   let userAge = new Date();
+
+//   function isOverEighteen(birthday) {
+//       var ageDifMs = Date.now() - birthday.getTime();
+//       var ageDate = new Date(ageDifMs);
+//       var age = Math.abs(ageDate.getUTCFullYear() - 1970);
+//       if(age > 18){
+//         return true;
+//       }else{
+//         return false;
+//       }
+//   }
+
+// console.log(isOverEighteen(now));
+// console.log(isOverEighteen(userAge));
 
 
   console.log(form);
@@ -138,8 +159,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     validate();
 
-    
-    const span = document.querySelector('.error');
+    const span = document.createElement('span');
+
+    if(!checkEmail(checkName())) {
+      console.log('name not valid');
+      span.classList.add('error');
+      return false;
+    } else {
+      span.classList.remove('error');
+    }
+
     if(!checkEmail(emailVal)) {
       console.log('email.not valid');
       span.classList.add('error');
