@@ -97,17 +97,20 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function checkName() {
-    let nameVal = fields.value;
+    let nameVal = /[А-ЯЁ][а-яё]/;
     console.log(nameVal);
+    if(inputName.length < 2) {
+      console.log('слишком короткое имя');
+    }
 
-    return /^[А-ЯЁ][а-яё]+$/.test(nameVal);
+    return nameVal.test(inputName.value);
   }
 
   // ValidEmail
   const emailRegExp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 
-  function validateEmail(value) {
-    return emailRegExp.test(value);
+  function validateEmail() {
+    return emailRegExp.test(inputEmail.value);
   }
 
   function updateInput() {
