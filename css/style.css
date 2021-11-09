@@ -87,11 +87,11 @@ body {
   color: #5802A3;
 }
 
-.user-name {
+/* .user-name {
   display: none;
   font-weight: 700;
   font-size: 18px;
-}
+} */
 
 .modal {
   position: absolute;
@@ -224,6 +224,10 @@ input[type=date]:valid+span:after {
   opacity: 1;
 }
 
+.form-btn._error {
+  display: none;
+}
+
 .main {
   width: 100%;
   height: 100vh;
@@ -262,3 +266,7 @@ input[type=date]:valid+span:after {
   border-bottom: 8px solid #d24a4a;
 }
 
+/* .active {
+  display: block;
+  overflow: hidden;
+} */

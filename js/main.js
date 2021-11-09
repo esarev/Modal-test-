@@ -9,14 +9,16 @@ document.addEventListener('DOMContentLoaded', function() {
         userName = document.querySelector('.user-name'),
         closeButton = form.querySelector('.modal__close-button'),
         buttonOut = document.querySelector('.button-out'),
+        formButton = document.querySelector('form-btn'),
         inputName = document.getElementById('name'),
         inputSurname = document.getElementById('surname'),
         inputEmail = document.getElementById('email'),
         inputPassword = document.getElementById('password'),
         inputPasswordRepeat = document.getElementById('password-repeat'),
         inputDate = document.getElementById('date'),
+        span = document.querySelectorAll('.error'),
         fields = document.querySelectorAll('.field');
-      
+
   // Open Modal
   loginButton.onclick = function () {
     modal.classList.add('modal_active');
@@ -34,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
       closeModal();
     }
   });
+  
 
   // User login
   const login = function(user) {
@@ -59,39 +62,42 @@ document.addEventListener('DOMContentLoaded', function() {
     logout();
   });
 
+  fields.forEach(function (field) {
+    field.addEventListener("focus", function () {
+    let span = document.getElementsByTagName('span');
+    console.log(span);
+    // span.parentNode.removeChild(span);
+    span[1].remove();
+    });
+  });
+
   // Validate
 
   function generateError(text) {
     const error = document.createElement('span');
-    error.className = 'error';
+    error.classList = 'error';
     error.style.display = 'block';
     error.innerText = text;
     return error;
   }
-
+  
   function removeValidation() {
-    let errors = form.querySelectorAll('.error');
-    
+    const errors = form.querySelectorAll('.error');
     for (let i = 0; i < errors.length; i++) {
       errors[i].remove();
     }
   }
-  
-  // fields.forEach((item) => {
-  //   item.addEventListener('focus', function() {
-  //     fields.parentNode.removeChild(fields);
-  //   });
-  // });
 
   function checkFields() {
     for (let i = 0; i < fields.length; i++) {
-      if (fields[i].value) {return;}
-        
+      if (fields[i].value == '') {
+        // {return;}
         isValidateError = true;
         const error = generateError('Заполните поле');
-      
+    
         fields[i].parentNode.insertBefore(error, fields[i]);
-    } 
+      } 
+    }  
   }
 
   function checkName() {
@@ -109,22 +115,25 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function updateInput() {
-    if(validateEmail(inputEmail.value)) {
-      return true;
-    } else {
+    if(!validateEmail(inputEmail.value)) {
       const error = generateError('Введите корректный email');
       inputEmail.parentNode.insertBefore(error, inputEmail);
+      // return false;
+    } else {
+      console.log(updateInput);
     }
+    
   }
   inputEmail.addEventListener('input', updateInput);
 
   // ValidPassword
+
   function checkPassword() {
     if (inputPassword.value !== inputPasswordRepeat.value) {
       const error = generateError('Пароли не совпадают');
       isValidateError = true;
       inputPasswordRepeat.parentNode.insertBefore(error, inputPasswordRepeat);
-    }
+    } 
   }
 
   // DateValid
@@ -136,12 +145,12 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log(dateEntered);
   let date = dateNow.getFullYear() - dateEntered.getFullYear();
   console.log(date);
-    if(date > 18) {
-      return true;
-    } else {
+    if(date < 18) {
       const error = generateError('Упс! Вам ещё не исполнилось 18 лет!');
+      isValidateError = true;
       console.log(generateError);
       inputDate.parentNode.insertBefore(error, inputDate);
+      // return error;
     }
   });
   
@@ -156,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    let emailVal = inputEmail.value;
+    
     isValidateError = false;
 
     console.log('clicked on submit');
@@ -174,6 +183,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!isValidateError) {
       login(user);
+    } else {
+      // form.field.clear();
     }
 
   });
