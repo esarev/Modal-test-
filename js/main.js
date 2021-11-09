@@ -133,12 +133,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if(inputPassword.value == '' || inputPassword.length < 8) {
       console.log('not valid');
+      const error = generateError('Пароль не валидный');
+      isValidateError = true;
+      inputPassword.parentNode.insertBefore(error, inputPassword);
     } else {
       console.log('valid');
     }
 
-    if(!hasNumber && !hasCapitalLetter && hasSymbol || inputPassword.value == '') {
+    if(!hasNumber && !hasCapitalLetter && !hasSymbol) {
       console.log('not valid');
+      const error = generateError('Пароль не валидный');
+      isValidateError = true;
+      inputPassword.parentNode.insertBefore(error, inputPassword);
     } else {
       console.log('valid');
     }
