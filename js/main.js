@@ -9,14 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
         userName = document.querySelector('.user-name'),
         closeButton = form.querySelector('.modal__close-button'),
         buttonOut = document.querySelector('.button-out'),
-        formButton = document.querySelector('form-btn'),
         inputName = document.getElementById('name'),
         inputSurname = document.getElementById('surname'),
         inputEmail = document.getElementById('email'),
         inputPassword = document.getElementById('password'),
         inputPasswordRepeat = document.getElementById('password-repeat'),
         inputDate = document.getElementById('date'),
-        span = document.querySelectorAll('.error'),
         fields = document.querySelectorAll('.field');
 
   // Open Modal
@@ -91,10 +89,8 @@ document.addEventListener('DOMContentLoaded', function() {
   function checkFields() {
     for (let i = 0; i < fields.length; i++) {
       if (fields[i].value == '') {
-        // {return;}
         isValidateError = true;
         const error = generateError('Заполните поле');
-    
         fields[i].parentNode.insertBefore(error, fields[i]);
       } 
     }  
@@ -118,7 +114,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if(!validateEmail(inputEmail.value)) {
       const error = generateError('Введите корректный email');
       inputEmail.parentNode.insertBefore(error, inputEmail);
-      // return false;
     } else {
       console.log(updateInput);
     }
@@ -129,11 +124,18 @@ document.addEventListener('DOMContentLoaded', function() {
   // ValidPassword
 
   function checkPassword() {
+    let regPassword = "^((?=.*\d)(?=.*[A-Z])(?=.*\W)$";
     if (inputPassword.value !== inputPasswordRepeat.value) {
       const error = generateError('Пароли не совпадают');
       isValidateError = true;
       inputPasswordRepeat.parentNode.insertBefore(error, inputPasswordRepeat);
-    } 
+    }
+    if(inputPassword.length >= 8) {
+      console.log('пароль валидный');
+    } else {
+      console.log('пароль не валидный');
+    }
+    
   }
 
   // DateValid
@@ -150,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function() {
       isValidateError = true;
       console.log(generateError);
       inputDate.parentNode.insertBefore(error, inputDate);
-      // return error;
     }
   });
   
@@ -164,7 +165,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-
     
     isValidateError = false;
 
@@ -183,8 +183,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!isValidateError) {
       login(user);
+      form.addEventListener('submit', () => {
+        document.getElementById("form").reset();
+      });
     } else {
-      // form.field.clear();
+      
     }
 
   });
