@@ -124,18 +124,31 @@ document.addEventListener('DOMContentLoaded', function() {
   // ValidPassword
 
   function checkPassword() {
-    let regPassword = "^((?=.*\d)(?=.*[A-Z])(?=.*\W)$";
+
+    const hasNumber = /\d/;
+    const hasCapitalLetter = /\[a-zA-z]+/;
+    const hasSymbol = /\[!@#]/;
+    let regexp = hasNumber && hasCapitalLetter && hasSymbol;
+    console.log(regexp);
+    
+    if(inputPassword.value == '' || inputPassword.length < 8) {
+      console.log('not valid');
+    } else {
+      console.log('valid');
+    }
+
+    if(!hasNumber && !hasCapitalLetter && hasSymbol || inputPassword.value == '') {
+      console.log('not valid');
+    } else {
+      console.log('valid');
+    }
+
     if (inputPassword.value !== inputPasswordRepeat.value) {
       const error = generateError('Пароли не совпадают');
       isValidateError = true;
       inputPasswordRepeat.parentNode.insertBefore(error, inputPasswordRepeat);
     }
-    if(inputPassword.length >= 8) {
-      console.log('пароль валидный');
-    } else {
-      console.log('пароль не валидный');
-    }
-    
+    return regexp.test(inputPassword.value);
   }
 
   // DateValid
