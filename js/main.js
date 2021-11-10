@@ -100,10 +100,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let nameVal = /[А-ЯЁ][а-яё]/;
     console.log(nameVal);
     if(inputName.length < 2) {
-      console.log('слишком короткое имя');
+      const error = generateError('Слишком короткое имя');
+      isValidateError = true;
+      inputName.parentNode.insertBefore(error, inputName);
     }
-
     return nameVal.test(inputName.value);
+    
   }
 
   // ValidEmail
@@ -136,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if(inputPassword.value == '' || inputPassword.length < 8) {
       console.log('not valid');
-      const error = generateError('Пароль не валидный');
+      const error = generateError('Длина пароля должна быть минимум 8 символов');
       isValidateError = true;
       inputPassword.parentNode.insertBefore(error, inputPassword);
     } else {
@@ -145,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if(!hasNumber && !hasCapitalLetter && !hasSymbol) {
       console.log('not valid');
-      const error = generateError('Пароль не валидный');
+      const error = generateError('Пароль должен включать одну заглавную букву, один символ, и одну цифру.');
       isValidateError = true;
       inputPassword.parentNode.insertBefore(error, inputPassword);
     } else {
@@ -165,16 +167,24 @@ document.addEventListener('DOMContentLoaded', function() {
   let input = this.value;
   let dateNow = new Date();
   let dateEntered = new Date(input);
-  console.log(input);
-  console.log(dateEntered);
   let date = dateNow.getFullYear() - dateEntered.getFullYear();
-  console.log(date);
+  const formButton = document.querySelector('.form-btn');
     if(date < 18) {
       const error = generateError('Упс! Вам ещё не исполнилось 18 лет!');
       isValidateError = true;
-      console.log(generateError);
+      console.log('ошибка выводится');
       inputDate.parentNode.insertBefore(error, inputDate);
+      formButton.classList.add('btn-error');
+      formButton.classList.remove('form-btn');
     }
+    if(date > 18) {
+      isValidateError = false;
+      formButton.classList.add('form-btn');
+      formButton.classList.remove('btn-error');
+      console.log('нет ошибки');
+      
+    }
+    
   });
   
 
