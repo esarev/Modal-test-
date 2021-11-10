@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
         inputPassword = document.getElementById('password'),
         inputPasswordRepeat = document.getElementById('password-repeat'),
         inputDate = document.getElementById('date'),
-        fields = document.querySelectorAll('.field');
+        fields = document.querySelectorAll('.field'),
+        formButton = document.querySelector('.form-btn');
 
   // Open Modal
   loginButton.onclick = function () {
@@ -54,6 +55,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   buttonOut.addEventListener('click', () => {
     logout();
+    fields.forEach((field) => {
+      field.value = '';
+    });
   });
 
   fields.forEach(function (field) {
@@ -113,8 +117,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if(!validateEmail(inputEmail.value)) {
       const error = generateError('Введите корректный email');
       inputEmail.parentNode.insertBefore(error, inputEmail);
+      
     } else {
       console.log(updateInput);
+      
     } 
   }
   inputEmail.addEventListener('input', updateInput);
@@ -131,10 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const error = generateError('Пароль должен содержать минимум 8 символов');
       isValidateError = true;
       inputPassword.parentNode.insertBefore(error, inputPassword);
-    } else {
-      console.log('valid');
     }
-
     if(!hasNumber && !hasCapitalLetter && !hasSymbol) {
       console.log('not valid');
       const error = generateError('Пароль должен включать одну заглавную букву, один символ, и одну цифру.');
@@ -158,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let dateNow = new Date();
   let dateEntered = new Date(input);
   let date = dateNow.getFullYear() - dateEntered.getFullYear();
-  const formButton = document.querySelector('.form-btn');
+  
     if(date < 18) {
       const error = generateError('Ты ещё так молод, у тебя всё впереди!:)');
       isValidateError = true;
