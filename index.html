@@ -33,7 +33,7 @@
         <button class="modal__close-button">x</button>
         <div class="form-control">
           <label for="name">Ваше имя*</label>
-          <input id="name" class="field" type="text" placeholder="Введите имя" name="name" maxlength="25" />
+          <input id="name" class="field" type="text" placeholder="Введите имя" name="name" minlength="2" maxlength="15" aria-required="false"  />
           <span class="error"></span>
         </div>
 
@@ -51,13 +51,13 @@
         
         <div class="form-control">
           <label for="password">Придумайте пароль*</label>
-          <input id="password" class="field" type="password" placeholder="Введите пароль" name="password" minlength="" />
+          <input id="password" class="field" type="password" placeholder="Введите пароль" name="password" />
           <span class="error"></span>
         </div>
 
         <div class="form-control">
           <label for="password-repeat">Повторите пароль*</label>
-          <input id="password-repeat" class="field" type="password" placeholder="Повторите пароль" name="password-repeat" minlength="" />
+          <input id="password-repeat" class="field" type="password" placeholder="Повторите пароль" name="password-repeat" />
           <span class="error"></span>
         </div>
 
