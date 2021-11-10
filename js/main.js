@@ -33,16 +33,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.target === modal) {
       closeModal();
     }
-  });
-  
+  }); 
 
   // User login
   const login = function(user) {
     loginButton.style.display = 'none';
-
     buttonOut.style.display = 'block';
     userName.style.display = 'block';
-  
     userName.textContent = user.name;
     modal.classList.remove('modal_active');
   };
@@ -50,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // User logout
   const logout = function() {
     loginButton.style.display = 'block';
-
     buttonOut.style.display = 'none';
     userName.style.display = 'none';
     userName.textContent = '';
@@ -70,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Validate
-
   function generateError(text) {
     const error = document.createElement('span');
     error.classList = 'error';
@@ -104,8 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
       isValidateError = true;
       inputName.parentNode.insertBefore(error, inputName);
     }
-    return nameVal.test(inputName.value);
-    
+    return nameVal.test(inputName.value);  
   }
 
   // ValidEmail
@@ -121,24 +115,20 @@ document.addEventListener('DOMContentLoaded', function() {
       inputEmail.parentNode.insertBefore(error, inputEmail);
     } else {
       console.log(updateInput);
-    }
-    
+    } 
   }
   inputEmail.addEventListener('input', updateInput);
 
   // ValidPassword
-
   function checkPassword() {
-
     const hasNumber = /\d/;
     const hasCapitalLetter = /\[a-zA-z]+/;
     const hasSymbol = /\[!@#]/;
     let regexp = hasNumber && hasCapitalLetter && hasSymbol;
     console.log(regexp);
-    
     if(inputPassword.value == '' || inputPassword.length < 8) {
       console.log('not valid');
-      const error = generateError('Длина пароля должна быть минимум 8 символов');
+      const error = generateError('Пароль должен содержать минимум 8 символов');
       isValidateError = true;
       inputPassword.parentNode.insertBefore(error, inputPassword);
     } else {
@@ -170,23 +160,17 @@ document.addEventListener('DOMContentLoaded', function() {
   let date = dateNow.getFullYear() - dateEntered.getFullYear();
   const formButton = document.querySelector('.form-btn');
     if(date < 18) {
-      const error = generateError('Упс! Вам ещё не исполнилось 18 лет!');
+      const error = generateError('Ты ещё так молод, у тебя всё впереди!:)');
       isValidateError = true;
       console.log('ошибка выводится');
       inputDate.parentNode.insertBefore(error, inputDate);
-      formButton.classList.add('btn-error');
-      formButton.classList.remove('form-btn');
+      formButton.disabled = true;
     }
     if(date > 18) {
-      isValidateError = false;
-      formButton.classList.add('form-btn');
-      formButton.classList.remove('btn-error');
+      formButton.disabled = false;
       console.log('нет ошибки');
-      
-    }
-    
-  });
-  
+    } 
+  });  
 
   function validate() {
     removeValidation();
@@ -196,12 +180,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    
+    e.preventDefault();   
     isValidateError = false;
-
-    console.log('clicked on submit');
-    
+    console.log('clicked on submit');    
     validate();
 
     const user = {
@@ -218,10 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
       form.addEventListener('submit', () => {
         document.getElementById("form").reset();
       });
-    } else {
-      
     }
-
   });
 });
 
