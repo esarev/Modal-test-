@@ -5,9 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const loginButton = document.getElementById('callback-button'),
         modal = document.getElementById('modal-window'),
-        form = document.getElementById('form'),
+        form = document.querySelector('form'),
         userName = document.querySelector('.user-name'),
-        closeButton = form.querySelector('.modal__close-button'),
+        closeButton = document.querySelector('.modal__close-button'),
         buttonOut = document.querySelector('.button-out'),
         inputName = document.getElementById('name'),
         inputSurname = document.getElementById('surname'),
@@ -68,6 +68,15 @@ document.addEventListener('DOMContentLoaded', function() {
     span[1].remove();
     });
   });
+  for(let elem of form.elements) {
+      if(!elem.classList.contains('modal__close-button') && elem.tagName !== 'BUTTON') {
+        if(elem.value === '') {
+          elem.nextElementSibling.textContent = 'Данное поле не заполнено!';
+        } else {
+          elem.nextElementSibling.classList.remove('error');
+        }
+      }
+    }
 
   // Validate
   function generateError(text) {
@@ -94,23 +103,44 @@ document.addEventListener('DOMContentLoaded', function() {
       } 
     }  
   }
-
+  
   function checkName() {
-    let nameVal = /[А-ЯЁ][а-яё]/;
-    console.log(nameVal);
-    if(inputName.length < 2) {
-      const error = generateError('Слишком короткое имя');
-      isValidateError = true;
-      inputName.parentNode.insertBefore(error, inputName);
-    }
-    return nameVal.test(inputName.value);  
+    const regExpName = /^[A-Za-zА-яа-я]{2,16}$/;
+    if(inputName) {
+      if(!regExpName.test(inputName.value) && inputName.value !== '') {
+        const error = generateError('Введите корректное имя');
+        isValidateError = true;
+        inputName.parentNode.insertBefore(error, inputName);
+      } else {
+        const error = generateError('');
+        error.style.display = 'none';
+        isValidateError = false;
+        inputName.parentNode.insertBefore(error, inputName);
+      }
+    } 
   }
 
-  // ValidEmail
-  const emailRegExp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+  function checkSurname() {
+    const regExpName = /^[A-Za-zА-яа-я]{2,16}$/;
+    if(inputSurname) {
+      if(!regExpName.test(inputSurname.value) && inputSurname.value !== '') {
+        const error = generateError('Введите корректную фамилию');
+        isValidateError = true;
+        inputSurname.parentNode.insertBefore(error, inputSurname);
+      } else {
+        const error = generateError('');
+        error.style.display = 'none';
+        isValidateError = false;
+        inputSurname.parentNode.insertBefore(error, inputSurname);
+      }
+    }
+  }
 
+
+  // ValidEmail
+  
   function validateEmail() {
-    return emailRegExp.test(inputEmail.value);
+    return inputEmail.test(inputEmail.value);
   }
 
   function updateInput() {
@@ -119,7 +149,8 @@ document.addEventListener('DOMContentLoaded', function() {
       inputEmail.parentNode.insertBefore(error, inputEmail);
       
     } else {
-      console.log(updateInput);
+      const error = generateError('');
+      inputEmail.parentNode.insertBefore(error, inputEmail);
       
     } 
   }
@@ -154,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     return regexp.test(inputPassword.value);
   }
-
+  
   // DateValid
   inputDate.addEventListener('change', function() {
   let input = this.value;
@@ -179,9 +210,10 @@ document.addEventListener('DOMContentLoaded', function() {
     removeValidation();
     checkFields();
     checkName();
+    checkSurname();
     checkPassword();
   }
-
+  console.log(form);
   form.addEventListener('submit', function (e) {
     e.preventDefault();   
     isValidateError = false;

@@ -161,6 +161,7 @@ body {
   transition: .3s;
 }
 
+
 input[type=text],
 input[type=email],
 input[type=password],
@@ -188,6 +189,7 @@ input[type=date] {
   outline: none;
   cursor: text;
 }
+
 
 .form-control {
   position: relative;
