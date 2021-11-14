@@ -68,15 +68,15 @@ document.addEventListener('DOMContentLoaded', function() {
     span[1].remove();
     });
   });
-  for(let elem of form.elements) {
-      if(!elem.classList.contains('modal__close-button') && elem.tagName !== 'BUTTON') {
-        if(elem.value === '') {
-          elem.nextElementSibling.textContent = 'Данное поле не заполнено!';
-        } else {
-          elem.nextElementSibling.classList.remove('error');
-        }
-      }
-    }
+  // for(let elem of form.elements) {
+  //   if(!elem.classList.contains('modal__close-button') && elem.tagName !== 'BUTTON') {
+  //     if(elem.value === '') {
+  //       elem.nextElementSibling.textContent = 'Данное поле не заполнено!';
+  //     } else {
+  //       elem.nextElementSibling.classList.remove('error');
+  //     }
+  //   }
+  // }
 
   // Validate
   function generateError(text) {
@@ -140,37 +140,44 @@ document.addEventListener('DOMContentLoaded', function() {
   // ValidEmail
   
   function validateEmail() {
-    return inputEmail.test(inputEmail.value);
+    const regExpEmail = /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i;
+    if(inputEmail) {
+      if(!regExpEmail.test(inputEmail.value) && inputEmail.value !== '') {
+        const error = generateError('Введите корректный email');
+        isValidateError = true;
+        inputEmail.parentNode.insertBefore(error, inputEmail);
+      } else {
+        const error = generateError('');
+        error.style.display = 'none';
+        isValidateError = false;
+        inputEmail.parentNode.insertBefore(error, inputEmail);
+      }
+    }
   }
-
-  function updateInput() {
-    if(!validateEmail(inputEmail.value)) {
-      const error = generateError('Введите корректный email');
-      inputEmail.parentNode.insertBefore(error, inputEmail);
-      
-    } else {
-      const error = generateError('');
-      inputEmail.parentNode.insertBefore(error, inputEmail);
-      
-    } 
-  }
-  inputEmail.addEventListener('input', updateInput);
 
   // ValidPassword
   function checkPassword() {
-    
+    const regExp1 = /[A-Z]{1}/g;
     console.log();
-    if(inputPassword.value == '' || inputPassword.value < 8) {
-      console.log('not valid');
-      const error = generateError('Пароль должен содержать минимум 8 символов');
-      isValidateError = true;
-      inputPassword.parentNode.insertBefore(error, inputPassword);
+    if(inputPassword) {
+      if(!regExp1.test(inputPassword.value) && inputPassword.value !=='') {
+        const error = generateError('Пароль должен содержать одну заглавную букву!');
+        isValidateError = true;
+        inputPassword.parentNode.insertBefore(error, inputPassword);
+      } 
+      //   if(inputPassword.value == '' && inputPassword.value < 8) {
+      //   console.log('not valid');
+      //   const error = generateError('Пароль должен содержать минимум 8 символов');
+      //   isValidateError = true;
+      //   inputPassword.parentNode.insertBefore(error, inputPassword);
+      // }
+      if (inputPassword.value !== inputPasswordRepeat.value) {
+        const error = generateError('Пароли не совпадают');
+        isValidateError = true;
+        inputPasswordRepeat.parentNode.insertBefore(error, inputPasswordRepeat);
+      }
     }
-    if (inputPassword.value !== inputPasswordRepeat.value) {
-      const error = generateError('Пароли не совпадают');
-      isValidateError = true;
-      inputPasswordRepeat.parentNode.insertBefore(error, inputPasswordRepeat);
-    }
+  
   }
   
   // DateValid
@@ -205,6 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
     checkFields();
     checkName();
     checkSurname();
+    validateEmail();
     checkPassword();
   }
   console.log(form);
@@ -223,12 +231,12 @@ document.addEventListener('DOMContentLoaded', function() {
     date: inputDate.value
     };
 
-    if (!isValidateError) {
-      login(user);
-      // form.addEventListener('submit', () => {
-      //   document.querySelector("form").reset();
-      // });
-    }
+    // if (!isValidateError) {
+    //   login(user);
+    //   // form.addEventListener('submit', () => {
+    //   //   document.querySelector("form").reset();
+    //   // });
+    // }
   });
 });
 
