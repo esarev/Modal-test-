@@ -158,32 +158,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ValidPassword
   function checkPassword() {
-    const hasNumber = /\d/;
-    const hasCapitalLetter = /\[a-zA-z]+/;
-    const hasSymbol = /\[!@#]/;
-    let regexp = hasNumber && hasCapitalLetter && hasSymbol;
-    console.log(regexp);
-    if(inputPassword.value == '' || inputPassword.length < 8) {
+    
+    console.log();
+    if(inputPassword.value == '' || inputPassword.value < 8) {
       console.log('not valid');
       const error = generateError('Пароль должен содержать минимум 8 символов');
       isValidateError = true;
       inputPassword.parentNode.insertBefore(error, inputPassword);
     }
-    if(!hasNumber && !hasCapitalLetter && !hasSymbol) {
-      console.log('not valid');
-      const error = generateError('Пароль должен включать одну заглавную букву, один символ, и одну цифру.');
-      isValidateError = true;
-      inputPassword.parentNode.insertBefore(error, inputPassword);
-    } else {
-      console.log('valid');
-    }
-
     if (inputPassword.value !== inputPasswordRepeat.value) {
       const error = generateError('Пароли не совпадают');
       isValidateError = true;
       inputPasswordRepeat.parentNode.insertBefore(error, inputPasswordRepeat);
     }
-    return regexp.test(inputPassword.value);
   }
   
   // DateValid
@@ -192,7 +179,14 @@ document.addEventListener('DOMContentLoaded', function() {
   let dateNow = new Date();
   let dateEntered = new Date(input);
   let date = dateNow.getFullYear() - dateEntered.getFullYear();
-  
+
+    if(input === '') {
+      const error = generateError('Ты ещё так молод, у тебя всё впереди!:)');
+      isValidateError = true;
+      console.log('ошибка выводится');
+      input.parentNode.insertBefore(error, input);
+    }
+    
     if(date < 18) {
       const error = generateError('Ты ещё так молод, у тебя всё впереди!:)');
       isValidateError = true;
@@ -231,9 +225,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!isValidateError) {
       login(user);
-      form.addEventListener('submit', () => {
-        document.getElementById("form").reset();
-      });
+      // form.addEventListener('submit', () => {
+      //   document.querySelector("form").reset();
+      // });
     }
   });
 });
