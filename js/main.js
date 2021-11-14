@@ -157,19 +157,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ValidPassword
   function checkPassword() {
-    const regExp1 = /[A-Z]{1}/g;
+    const regExp1 = /[A-Z]{1,}/g;
+    const regExp2 = /[a-z]{1,}/;
+    const regExp3 = /\d{1,}/;
+    // const regExp4 = /S+/;
+    
     console.log();
     if(inputPassword) {
-      if(!regExp1.test(inputPassword.value) && inputPassword.value !=='') {
-        const error = generateError('Пароль должен содержать одну заглавную букву!');
+      if(!regExp1.test(inputPassword.value) && 
+      !regExp2.test(inputPassword.value) && 
+      !regExp3.test(inputPassword.value)) {
+        const error = generateError('Пароль должен содержать: Одну цифру,символ, заглавную и строчную буквы(EN)!');
         isValidateError = true;
         inputPassword.parentNode.insertBefore(error, inputPassword);
       } 
-      //   if(inputPassword.value == '' && inputPassword.value < 8) {
-      //   console.log('not valid');
-      //   const error = generateError('Пароль должен содержать минимум 8 символов');
-      //   isValidateError = true;
-      //   inputPassword.parentNode.insertBefore(error, inputPassword);
+      // if(inputPassword.value == '' && inputPassword.value < 8) {
+      // console.log('not valid');
+      // const error = generateError('Пароль должен содержать минимум 8 символов');
+      // isValidateError = true;
+      // inputPassword.parentNode.insertBefore(error, inputPassword);
       // }
       if (inputPassword.value !== inputPasswordRepeat.value) {
         const error = generateError('Пароли не совпадают');
@@ -181,31 +187,26 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // DateValid
-  inputDate.addEventListener('change', function() {
-  let input = this.value;
-  let dateNow = new Date();
-  let dateEntered = new Date(input);
-  let date = dateNow.getFullYear() - dateEntered.getFullYear();
-
-    if(input === '') {
-      const error = generateError('Ты ещё так молод, у тебя всё впереди!:)');
-      isValidateError = true;
-      console.log('ошибка выводится');
-      input.parentNode.insertBefore(error, input);
-    }
+  function checkDate() {
+    inputDate.addEventListener('change', function() {
+    let input = this.value;
+    let dateNow = new Date();
+    let dateEntered = new Date(input);
+    let date = dateNow.getFullYear() - dateEntered.getFullYear();
+    console.log(date);
     
-    if(date < 18) {
-      const error = generateError('Ты ещё так молод, у тебя всё впереди!:)');
-      isValidateError = true;
-      console.log('ошибка выводится');
-      inputDate.parentNode.insertBefore(error, inputDate);
-      formButton.disabled = true;
-    }
-    if(date > 18) {
-      formButton.disabled = false;
-      console.log('нет ошибки');
-    } 
-  });  
+      if(date < 18) {
+        const error = generateError('Ты ещё так молод, у тебя всё впереди!:)');
+        isValidateError = true;
+        console.log('ошибка выводится');
+        inputDate.parentNode.insertBefore(error, inputDate);
+        formButton.disabled = true;
+      } else {
+        formButton.disabled = false;
+        console.log('нет ошибки');
+      }
+    });
+  }
 
   function validate() {
     removeValidation();
@@ -214,6 +215,7 @@ document.addEventListener('DOMContentLoaded', function() {
     checkSurname();
     validateEmail();
     checkPassword();
+    checkDate();
   }
   console.log(form);
   form.addEventListener('submit', function (e) {
@@ -231,12 +233,12 @@ document.addEventListener('DOMContentLoaded', function() {
     date: inputDate.value
     };
 
-    // if (!isValidateError) {
-    //   login(user);
-    //   // form.addEventListener('submit', () => {
-    //   //   document.querySelector("form").reset();
-    //   // });
-    // }
+    if (!isValidateError) {
+      login(user);
+      form.addEventListener('submit', () => {
+        document.querySelector("form").reset();
+      });
+    }
   });
 });
 
