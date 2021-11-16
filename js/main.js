@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function checkName() {
     const regExpName = /^[A-Za-zА-яа-я]{2,16}$/;
     if(inputName) {
-      if(!regExpName.test(inputName.value) && inputName.value !== '') {
+      if(!regExpName.test(inputName.value) || inputName.value !== '') {
         const error = generateError('Введите корректное имя');
         isValidateError = true;
         inputName.parentNode.insertBefore(error, inputName);
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function checkSurname() {
     const regExpName = /^[A-Za-zА-яа-я]{2,16}$/;
     if(inputSurname) {
-      if(!regExpName.test(inputSurname.value) && inputSurname.value !== '') {
+      if(!regExpName.test(inputSurname.value) || inputSurname.value !== '') {
         const error = generateError('Введите корректную фамилию');
         isValidateError = true;
         inputSurname.parentNode.insertBefore(error, inputSurname);
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function validateEmail() {
     const regExpEmail = /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i;
     if(inputEmail) {
-      if(!regExpEmail.test(inputEmail.value) && inputEmail.value !== '') {
+      if(!regExpEmail.test(inputEmail.value) || inputEmail.value !== '') {
         const error = generateError('Введите корректный email');
         isValidateError = true;
         inputEmail.parentNode.insertBefore(error, inputEmail);
@@ -160,23 +160,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const regExp1 = /[A-Z]{1,}/g;
     const regExp2 = /[a-z]{1,}/;
     const regExp3 = /\d{1,}/;
-    // const regExp4 = /S+/;
-    
-    console.log();
+    const regExp4 = /[^A-Za-z0-9]{1,}/;
+
     if(inputPassword) {
-      if(!regExp1.test(inputPassword.value) && 
-      !regExp2.test(inputPassword.value) && 
-      !regExp3.test(inputPassword.value)) {
+      if(!regExp1.test(inputPassword.value) || 
+      !regExp2.test(inputPassword.value) || 
+      !regExp3.test(inputPassword.value) ||
+      !regExp4.test(inputPassword.value) ||
+      inputPassword.value < 8) {
         const error = generateError('Пароль должен содержать: Одну цифру,символ, заглавную и строчную буквы(EN)!');
         isValidateError = true;
         inputPassword.parentNode.insertBefore(error, inputPassword);
       } 
-      // if(inputPassword.value == '' && inputPassword.value < 8) {
-      // console.log('not valid');
-      // const error = generateError('Пароль должен содержать минимум 8 символов');
-      // isValidateError = true;
-      // inputPassword.parentNode.insertBefore(error, inputPassword);
-      // }
+      
       if (inputPassword.value !== inputPasswordRepeat.value) {
         const error = generateError('Пароли не совпадают');
         isValidateError = true;
@@ -187,26 +183,47 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // DateValid
-  function checkDate() {
-    inputDate.addEventListener('change', function() {
-    let input = this.value;
-    let dateNow = new Date();
-    let dateEntered = new Date(input);
-    let date = dateNow.getFullYear() - dateEntered.getFullYear();
-    console.log(date);
+  // function checkDate() {
+  //   inputDate.addEventListener('change', function() {
+  //   let input = this.value;
+  //   let dateNow = new Date();
+  //   let dateEntered = new Date(input);
+  //   let date = dateNow.getFullYear() - dateEntered.getFullYear();
+  //   console.log(date);
     
-      if(date < 18) {
-        const error = generateError('Ты ещё так молод, у тебя всё впереди!:)');
-        isValidateError = true;
-        console.log('ошибка выводится');
-        inputDate.parentNode.insertBefore(error, inputDate);
-        formButton.disabled = true;
-      } else {
-        formButton.disabled = false;
-        console.log('нет ошибки');
-      }
-    });
-  }
+  //     if(date < 18) {
+  //       const error = generateError('Ты ещё так молод, у тебя всё впереди!:)');
+  //       isValidateError = true;
+  //       console.log('ошибка выводится');
+  //       inputDate.parentNode.insertBefore(error, inputDate);
+  //       formButton.disabled = true;
+  //     } else {
+  //       formButton.disabled = false;
+  //       console.log('нет ошибки');
+  //     }
+  //   });
+  // }
+
+  const checkDate = function(birthday) {
+    const now = new Date();
+    const legalAge = new Date (now.getFullYear() - 18, now.getMonth(), now.getDate());
+    const userBirthday = new Date(birthday);
+
+  // if(legalAge < 18) {
+  //   const error = generateError('Ты ещё так молод, у тебя всё впереди!:)');
+  //   isValidateError = true;
+  //   console.log('ошибка выводится');
+  //   inputDate.parentNode.insertBefore(error, inputDate);
+  //   formButton.disabled = true;
+  //   } else {
+  //     formButton.disabled = false;
+  //     console.log('нет ошибки');
+  //   }
+    console.log(legalAge);
+    console.log(userBirthday);
+    return legalAge >= userBirthday;
+    
+  };
 
   function validate() {
     removeValidation();
