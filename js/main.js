@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function checkName() {
     const regExpName = /^[A-Za-zА-яа-я]{2,16}$/;
     if(inputName) {
-      if(!regExpName.test(inputName.value) || inputName.value !== '') {
+      if(!regExpName.test(inputName.value) && inputName.value !== '') {
         const error = generateError('Введите корректное имя');
         isValidateError = true;
         inputName.parentNode.insertBefore(error, inputName);
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function checkSurname() {
     const regExpName = /^[A-Za-zА-яа-я]{2,16}$/;
     if(inputSurname) {
-      if(!regExpName.test(inputSurname.value) || inputSurname.value !== '') {
+      if(!regExpName.test(inputSurname.value) && inputSurname.value !== '') {
         const error = generateError('Введите корректную фамилию');
         isValidateError = true;
         inputSurname.parentNode.insertBefore(error, inputSurname);
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function validateEmail() {
     const regExpEmail = /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i;
     if(inputEmail) {
-      if(!regExpEmail.test(inputEmail.value) || inputEmail.value !== '') {
+      if(!regExpEmail.test(inputEmail.value) && inputEmail.value !== '') {
         const error = generateError('Введите корректный email');
         isValidateError = true;
         inputEmail.parentNode.insertBefore(error, inputEmail);
