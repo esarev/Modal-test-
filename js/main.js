@@ -209,20 +209,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const legalAge = new Date (now.getFullYear() - 18, now.getMonth(), now.getDate());
     const userBirthday = new Date(birthday);
 
-  // if(legalAge < 18) {
-  //   const error = generateError('Ты ещё так молод, у тебя всё впереди!:)');
-  //   isValidateError = true;
-  //   console.log('ошибка выводится');
-  //   inputDate.parentNode.insertBefore(error, inputDate);
-  //   formButton.disabled = true;
-  //   } else {
-  //     formButton.disabled = false;
-  //     console.log('нет ошибки');
-  //   }
+    if(legalAge.value < 18) {
+      const error = generateError('Ты ещё так молод, у тебя всё впереди!:)');
+      isValidateError = true;
+      console.log('ошибка выводится');
+      inputDate.parentNode.insertBefore(error, inputDate);
+      formButton.disabled = true;
+    } else {
+      formButton.disabled = false;
+      console.log('нет ошибки');
+    }
     console.log(legalAge);
     console.log(userBirthday);
     return legalAge >= userBirthday;
-    
   };
 
   function validate() {
@@ -232,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
     checkSurname();
     validateEmail();
     checkPassword();
-    checkDate();
+    // checkDate();
   }
   console.log(form);
   form.addEventListener('submit', function (e) {
