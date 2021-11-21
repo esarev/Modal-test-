@@ -68,15 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
     span[1].remove();
     });
   });
-  // for(let elem of form.elements) {
-  //   if(!elem.classList.contains('modal__close-button') && elem.tagName !== 'BUTTON') {
-  //     if(elem.value === '') {
-  //       elem.nextElementSibling.textContent = 'Данное поле не заполнено!';
-  //     } else {
-  //       elem.nextElementSibling.classList.remove('error');
-  //     }
-  //   }
-  // }
 
   // Validate
   function generateError(text) {
@@ -138,7 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   // ValidEmail
-  
   function validateEmail() {
     const regExpEmail = /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i;
     if(inputEmail) {
@@ -204,23 +194,10 @@ document.addEventListener('DOMContentLoaded', function() {
   //   });
   // }
 
-  const checkDate = function(birthday) {
+  const checkDate = (birthday) => {
     const now = new Date();
     const legalAge = new Date (now.getFullYear() - 18, now.getMonth(), now.getDate());
     const userBirthday = new Date(birthday);
-
-    if(legalAge.value < 18) {
-      const error = generateError('Ты ещё так молод, у тебя всё впереди!:)');
-      isValidateError = true;
-      console.log('ошибка выводится');
-      inputDate.parentNode.insertBefore(error, inputDate);
-      formButton.disabled = true;
-    } else {
-      formButton.disabled = false;
-      console.log('нет ошибки');
-    }
-    console.log(legalAge);
-    console.log(userBirthday);
     return legalAge >= userBirthday;
   };
 
@@ -231,13 +208,12 @@ document.addEventListener('DOMContentLoaded', function() {
     checkSurname();
     validateEmail();
     checkPassword();
-    // checkDate();
+    checkDate();
   }
   console.log(form);
   form.addEventListener('submit', function (e) {
     e.preventDefault();   
-    isValidateError = false;
-    console.log('clicked on submit');    
+    isValidateError = false;    
     validate();
 
     const user = {
@@ -251,9 +227,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!isValidateError) {
       login(user);
-      form.addEventListener('submit', () => {
-        document.querySelector("form").reset();
-      });
     }
   });
 });
